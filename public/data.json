@@ -1,0 +1,62 @@
+{
+  "objects": {
+    "35FMeADj": {
+      "key": "35FMeADj",
+      "component": "V3dObjLoader",
+      "name": "小盘",
+      "attr": {
+        "position": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "rotation": {
+          "x": 0,
+          "y": 0,
+          "z": 0
+        },
+        "scale": {
+          "x": 0.02,
+          "y": 0.02,
+          "z": 0.02
+        },
+        "path": "https://widget.yunyansheji.com/storage/sourceObject/8f3d71017c707b08ec9b676cb5d39df2.obj",
+        "size": 0
+      }
+    }
+  },
+  "materials": {
+    "default": {
+      "name": "默认材质",
+      "readonly": true,
+      "color": "rgb(255,255,255)",
+      "transparent": false,
+      "opacity": 1
+    }
+  },
+  "uvs": {
+    "35FMeADj": {
+      "editable": true,
+      "rule": 1024,
+      "areas": [
+        {
+          "name": "盘身",
+          "shape": "rect",
+          "width": 500,
+          "height": 300,
+          "offsetX": 50,
+          "offsetY": 100
+        }
+      ]
+    }
+  },
+  "hierarchy": [
+    {
+      "key": "35FMeADj",
+      "name": "小盘",
+      "parent": null,
+      "children": [],
+      "material": "default"
+    }
+  ]
+}

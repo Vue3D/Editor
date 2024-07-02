@@ -1,0 +1,141 @@
+<script setup>
+import {VcPcAppLayout, VcSidebar, VcSidebarItem} from "@unjuanable/vcui";
+import {onMounted, ref} from "vue";
+import VeInspector from "@/components/VeInspector";
+import VeTransformMode from "@/components/VeTransformMode";
+import MyObjectsList from "./componens/MyObjectsList.vue";
+import {useEditorStore} from "@/stores";
+import {load, save, update} from "./api/yunyan";
+import {useIcon} from "@unjuanable/iconfont";
+import VeHierarchy from "@/components/VeHierachy/VeHierarchy.vue";
+import VeScene from "@/components/VeScene/VeScene.vue";
+
+const collapsed = ref(false)
+const collapse_right = ref(false)
+const activate = ref(0)
+const editor = useEditorStore()
+const visible = ref(false)
+const name = ref("")
+
+const parsedUrl = new URL(window.location.href);
+let id = parsedUrl.searchParams.get("id")
+
+console.log(useIcon('vue3d-database', 'vue3d-icon'))
+onMounted(() => {
+  if (id) {
+    load({id}).then(res => {
+      if (res.code === 2000) {
+        const obj = JSON.parse(res.data[0].uvs)
+        name.value = res.data[0].name
+        editor.load(obj)
+      }
+    })
+  }
+})
+
+const handleCancel = () => {
+}
+
+const handleBeforeOk = async () => {
+  const thumbnail = editor.scene.dom.canvas.toDataURL()
+  if (id) {
+    await update({
+      id: id,
+      name: name.value,
+      thumbnail: thumbnail,
+      uvs: editor.save()
+    });
+    return true;
+  } else {
+    const res = await save({
+      name: name.value,
+      thumbnail: thumbnail,
+      uvs: editor.save()
+    });
+    id = res.data
+    return true;
+  }
+  // prevent close
+  // return false;
+};
+
+</script>
+
+<template>
+  <vc-pc-app-layout :right-panel-width="300"
+                    :leftPanelWidth="collapsed?400:80"
+                    :show-right-panel="collapse_right">
+    <template #left-panel>
+      <vc-sidebar :label-size="80" v-model:collapsed="collapsed" v-model:activated="activate">
+        <vc-sidebar-item label="库"
+                         :icon="useIcon('vue3d-database','24px','vue3d-icon')"
+                         :active="activate===0"
+                         keepalive>
+          <my-objects-list></my-objects-list>
+        </vc-sidebar-item>
+        <vc-sidebar-item label="层级"
+                         :icon="useIcon('vue3d-Hierarchy','24px','vue3d-icon')"
+                         :active="activate===1">
+          <ve-hierarchy></ve-hierarchy>
+        </vc-sidebar-item>
+      </vc-sidebar>
+    </template>
+
+    <template #right-panel>
+      <ve-inspector></ve-inspector>
+    </template>
+
+    <template #content="params">
+      <VeScene :width="params.width" :height="params.height"></VeScene>
+      <ve-transform-mode></ve-transform-mode>
+
+      <div class="save">
+        <a-button @click="visible=!visible" status="success">
+          <template #icon>
+            <icon-font font="vue3d-icon" type="vue3d-save"/>
+          </template>
+        </a-button>
+        <a-button @click="collapse_right=!collapse_right">
+          <template #icon>
+            <icon-font v-if="collapse_right" font="vue3d-icon" type="vue3d-collapse-right"/>
+            <icon-font v-else font="vue3d-icon" type="vue3d-collapse-left"/>
+          </template>
+        </a-button>
+      </div>
+    </template>
+  </vc-pc-app-layout>
+
+  <a-modal v-model:visible="visible"
+           @cancel="handleCancel"
+           :on-before-ok="handleBeforeOk"
+           unmountOnClose>
+    <template #title>
+      确认是否保存？
+    </template>
+    <a-input v-model="name" placeholder="请输入保存的方案名称..."/>
+  </a-modal>
+</template>
+
+<style>
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.save {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+}
+</style>
