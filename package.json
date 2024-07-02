@@ -1,0 +1,38 @@
+{
+  "name": "@vue3d/editor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "keywords": [
+    "vue3",
+    "vue3d",
+    "three.js"
+  ],
+  "author": "LeeNux",
+  "license": "MIT",
+  "dependencies": {
+    "@arco-design/web-vue": "^2.55.3",
+    "@canvue/canvue": "^0.6.4",
+    "@unjuanable/iconfont": "^1.3.3",
+    "@unjuanable/jokes": "^0.3.1",
+    "@unjuanable/vcui": "^1.3.3",
+    "axios": "^1.7.2",
+    "nanoid": "^5.0.7",
+    "pinia": "^2.1.7",
+    "pinia-plugin-persistedstate": "^3.2.1",
+    "vue": "^3.4.29",
+    "vue3-colorpicker": "^2.3.0",
+    "vue3d": "file:../Vue3D"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.0.5",
+    "jsdoc": "^4.0.3",
+    "three": "^0.165.0",
+    "vite": "^5.3.1"
+  }
+}
