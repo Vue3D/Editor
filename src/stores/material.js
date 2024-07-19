@@ -1,8 +1,8 @@
 import {defineStore} from "pinia";
 import {computed, markRaw, onMounted, reactive} from "vue";
 import {useDataStore} from "./data";
-import {defaultMaterial as ceramic} from "vue3d/use";
-import {Color, TextureLoader} from "three"
+import {defaultMaterial as ceramic} from "vue3d/use/useMaterial";
+import {Color, TextureLoader} from "vue3d"
 import {nanoid} from "nanoid";
 
 /**

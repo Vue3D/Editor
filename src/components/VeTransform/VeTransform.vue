@@ -1,7 +1,7 @@
 <script setup>
 import {computed, ref, watch} from "vue";
 import {useEditorStore, useTransformStore} from "@/stores";
-import {Euler} from "three";
+import {Euler} from "vue3d";
 
 /**
  * pinia store
@@ -42,7 +42,7 @@ const scale = computed(() => {
 })
 /**
  * rotation
- * @type {ComputedRef<unknown>}
+ * @type
  */
 const rotation = computed(() => {
   if (editor.selected.object3d) {

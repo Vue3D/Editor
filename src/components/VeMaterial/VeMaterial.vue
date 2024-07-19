@@ -1,8 +1,8 @@
 <script setup>
 import {computed, markRaw, reactive, ref} from "vue";
-import {Color, TextureLoader} from "three"
+import {Color, TextureLoader} from "vue3d"
 import {ColorPicker} from "vue3-colorpicker";
-import {useEditorStore, useMaterialStore} from "../../stores";
+import {useEditorStore, useMaterialStore} from "@/stores";
 import {Notification} from '@arco-design/web-vue';
 
 const editor = useEditorStore()

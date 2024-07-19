@@ -8,10 +8,11 @@ import {useTransformStore} from "./transform";
 const store = createPinia()
 store.use(piniaPluginPersistedState)
 
-export default store
 export {
     useDataStore,
     useEditorStore,
     useMaterialStore,
     useTransformStore
 }
+
+export default store

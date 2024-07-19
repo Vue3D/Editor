@@ -1,5 +1,5 @@
 <script setup>
-import {reactive} from "vue";
+import {markRaw, reactive} from "vue";
 import VeTransform from "../VeTransform";
 import VeMaterial from "../VeMaterial";
 import VeUvs from "../VeUvs"
@@ -8,15 +8,15 @@ const inspector = reactive({
   card: {
     transform: {
       header: "变换 ( Transform )",
-      component: VeTransform
+      component: markRaw(VeTransform)
     },
     material: {
       header: "材质 ( Material )",
-      component: VeMaterial
+      component: markRaw(VeMaterial)
     },
     uvs: {
       header: "可装饰区域 ( UVs )",
-      component: VeUvs
+      component: markRaw(VeUvs)
     }
   },
   active: ["transform", "material", "uvs"], // 折叠面板 type: []card.key

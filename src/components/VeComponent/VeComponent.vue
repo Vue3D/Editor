@@ -1,5 +1,4 @@
 <script setup>
-import {V3dSphere, V3dCube} from "vue3d/node"
 import {useEditorStore, useMaterialStore} from "@/stores";
 import {computed} from "vue";
 
@@ -19,15 +18,14 @@ const props = defineProps({
   preset: {type: Boolean, default: false},
   material: {type: String}
 })
+console.log(props.attr && props.attr.hasOwnProperty("material"))
+if (props.attr && props.attr.hasOwnProperty("material")) {
+  props.attr.material = material.get(props.material)
+}
 
-const mtl = computed(() => {
-  return material.get(props.material)
-})
 </script>
 <template>
   <component :is="is"
-             :name="name"
-             :material="mtl"
              v-bind="attr"
              v-on="event"
   >

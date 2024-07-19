@@ -44,12 +44,26 @@ export const useTransformStore = defineStore('transform', () => {
     }
 
     onMounted(() => {
-        // $vue3d.on(ev.selected.tfMode.handler, (val) => {
-        //     status.mode = val
-        // })
-        // $vue3d.on(ev.selected.tfSpace.handler, () => {
-        //     status.space = status.space === 'world' ? 'local' : 'world'
-        // })
+        // 绑定快捷键
+        window.addEventListener('keydown', function (event) {
+            switch (event.key) {
+                case 'q':
+                    // $vue3d.emit(ev.selected.tfMode.handler, "translate", scene.id)
+                    break;
+
+                case 'w':
+                    // $vue3d.emit(ev.selected.tfMode.handler, "rotate", scene.id)
+                    break;
+
+                case "e":
+                    // $vue3d.emit(ev.selected.tfMode.handler, "scale", scene.id)
+                    break;
+
+                case "t":
+                    // $vue3d.emit(ev.selected.tfSpace.handler, null, scene.id)
+                    break;
+            }
+        })
     })
 
     return {mode, space, angle2euler, euler2angle}

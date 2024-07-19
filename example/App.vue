@@ -3,15 +3,16 @@ import {VcPcAppLayout, VcSidebar, VcSidebarItem} from "@unjuanable/vcui";
 import {onMounted, ref} from "vue";
 import VeInspector from "@/components/VeInspector";
 import VeTransformMode from "@/components/VeTransformMode";
+import VeHierarchy from "@/components/VeHierachy";
+import VeScene from "@/components/VeScene";
 import MyObjectsList from "./componens/MyObjectsList.vue";
 import {useEditorStore} from "@/stores";
 import {load, save, update} from "./api/yunyan";
 import {useIcon} from "@unjuanable/iconfont";
-import VeHierarchy from "@/components/VeHierachy/VeHierarchy.vue";
-import VeScene from "@/components/VeScene/VeScene.vue";
+
 
 const collapsed = ref(false)
-const collapse_right = ref(false)
+const collapse_right = ref(true)
 const activate = ref(0)
 const editor = useEditorStore()
 const visible = ref(false)
@@ -20,7 +21,6 @@ const name = ref("")
 const parsedUrl = new URL(window.location.href);
 let id = parsedUrl.searchParams.get("id")
 
-console.log(useIcon('vue3d-database', 'vue3d-icon'))
 onMounted(() => {
   if (id) {
     load({id}).then(res => {
@@ -37,7 +37,7 @@ const handleCancel = () => {
 }
 
 const handleBeforeOk = async () => {
-  const thumbnail = editor.scene.dom.canvas.toDataURL()
+  const thumbnail = editor.editor.stage.dom.canvas.toDataURL()
   if (id) {
     await update({
       id: id,
@@ -59,6 +59,12 @@ const handleBeforeOk = async () => {
   // return false;
 };
 
+document.addEventListener('contextmenu', function (event) {
+  event.preventDefault()
+})
+document.addEventListener('dblclick', function (event) {
+  event.preventDefault()
+})
 </script>
 
 <template>
@@ -86,7 +92,7 @@ const handleBeforeOk = async () => {
     </template>
 
     <template #content="params">
-      <VeScene :width="params.width" :height="params.height"></VeScene>
+      <ve-scene :width="params.width" :height="params.height"></ve-scene>
       <ve-transform-mode></ve-transform-mode>
 
       <div class="save">

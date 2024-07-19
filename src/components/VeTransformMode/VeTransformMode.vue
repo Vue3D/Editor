@@ -32,11 +32,11 @@ const changeSpace = (val) => {
       <a-button class="btn"
                 :type="transformStore.space==='world'?'primary':''"
                 @click="changeSpace('world')"
-                v-html="useIcon('vue3d-world-space','vue3d-icon')"></a-button>
+                v-html="useIcon('vue3d-world-space','16px','vue3d-icon')"></a-button>
       <a-button class="btn"
                 :type="transformStore.space==='local'?'primary':''"
                 @click="changeSpace('local')"
-                v-html="useIcon('vue3d-local-space','vue3d-icon')"></a-button>
+                v-html="useIcon('vue3d-local-space','16px','vue3d-icon')"></a-button>
     </a-button-group>
   </a-row>
 </template>

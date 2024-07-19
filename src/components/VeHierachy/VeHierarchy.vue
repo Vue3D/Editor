@@ -3,7 +3,6 @@ import {inject, onMounted, reactive, ref} from 'vue';
 import {useEditorStore} from "@/stores";
 import VeDataTool from "../VeDataTool";
 
-const $vue3d = inject("$vue3d")
 const editor = useEditorStore()
 
 const treeData = ref(editor.hierarchy);
