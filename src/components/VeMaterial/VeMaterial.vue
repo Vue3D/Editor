@@ -4,9 +4,11 @@ import {Color, TextureLoader} from "vue3d"
 import {ColorPicker} from "vue3-colorpicker";
 import {useEditorStore, useMaterialStore} from "@/stores";
 import {Notification} from '@arco-design/web-vue';
+import {useSelectedStore} from "@/stores/selected";
 
-const editor = useEditorStore()
-const material = useMaterialStore()
+const $editor = useEditorStore()
+const $selected = useSelectedStore()
+const $material = useMaterialStore()
 const visible = ref(false)
 const visibleAddMtl = ref(false)
 
@@ -32,10 +34,10 @@ const mtlName = ref("")
  */
 const selected = computed({
   get() {
-    if (editor.selectedObject3d) {
-      const key = editor.selected.node?.material
-      activeMtl = material.get(key)
-      activePure = material.getPure(key)
+    if ($editor.selectedObject3d) {
+      const key = $selected.node?.material
+      activeMtl = $material.get(key)
+      activePure = $material.getPure(key)
       return key
     } else {
       activeMtl = null
@@ -44,8 +46,8 @@ const selected = computed({
     }
   },
   set(val) {
-    editor.selected.node.material = val
-    editor.render()
+    $selected.node.material = val
+    $editor.render()
   }
 })
 /**
@@ -55,7 +57,7 @@ const selected = computed({
 const onChangeColor = (val) => {
   activePure.color = val
   activeMtl.color = new Color(val)
-  editor.render()
+  $editor.render()
 }
 /**
  * 切换是否透明
@@ -63,7 +65,7 @@ const onChangeColor = (val) => {
  */
 const onChangeTransparent = (val) => {
   activeMtl.transparent = val
-  editor.render()
+  $editor.render()
 }
 /**
  * 切换透明度
@@ -71,15 +73,15 @@ const onChangeTransparent = (val) => {
  */
 const onChangeOpacity = (val) => {
   activeMtl.opacity = val
-  editor.render()
+  $editor.render()
 }
 const onChangeWireframe = (val) => {
   activeMtl.wireframe = val
-  editor.render()
+  $editor.render()
 }
 const onChangeFlatShading = (val) => {
   activeMtl.flatshading = val
-  editor.render()
+  $editor.render()
 }
 const onUpload = (_, currentFile) => {
   if (currentFile.status === "init") {
@@ -94,7 +96,7 @@ const onUpload = (_, currentFile) => {
       loader.load(this.result, (texture) => {
         activeMtl.map = texture
         activeMtl.needsUpdate = true
-        editor.render()
+        $editor.render()
       })
       activePure.map = this.result
       Notification.success('上传成功')
@@ -118,13 +120,13 @@ const onUploadProgress = (currentFile) => {
       <a-col :span="16">
         <a-select :style="{width:'100%'}"
                   v-model="selected"
-                  :disabled="editor.selectedObject3d===null">
-          <a-option v-for="(item,key) in material.list" :value="key">{{ item.name }}</a-option>
+                  :disabled="$editor.selectedObject3d===null">
+          <a-option v-for="(item,key) in $material.list" :value="key">{{ item.name }}</a-option>
         </a-select>
       </a-col>
     </a-row>
 
-    <template v-if="editor.selectedObject3d!==null&&selected!=='default'">
+    <template v-if="$editor.selectedObject3d!==null&&selected!=='default'">
       <a-row class="row">
         <a-col :span="6">颜色:</a-col>
         <a-col :span="18">
@@ -225,11 +227,11 @@ const onUploadProgress = (currentFile) => {
       材质管理
     </template>
 
-    <a-table :columns="columns" :data="material.table">
+    <a-table :columns="columns" :data="$material.table">
       <template #optional="{ record }">
         <a-button status="danger"
                   :disabled="record.data.readonly"
-                  @click="material.remove(record.key)">删除
+                  @click="$material.remove(record.key)">删除
         </a-button>
       </template>
     </a-table>
@@ -240,7 +242,7 @@ const onUploadProgress = (currentFile) => {
     </template>
   </a-modal>
 
-  <a-modal v-model:visible="visibleAddMtl" :z-index="99" @ok="material.create(mtlName)">
+  <a-modal v-model:visible="visibleAddMtl" :z-index="99" @ok="$material.create(mtlName)">
     <template #title>
       添加材质
     </template>

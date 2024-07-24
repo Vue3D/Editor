@@ -1,21 +1,23 @@
 <script setup>
 import {computed} from "vue";
-import {useEditorStore} from "../../stores";
+import {useEditorStore, useSelectedStore} from "@/stores";
 
-const editor = useEditorStore()
+const $editor = useEditorStore()
+const $selected = useSelectedStore()
+
 const props = defineProps({
   value: {type: Number}
 })
 
 const data = computed(() => {
-  if (editor.selectedObject3d) {
-    return editor.uvs[editor.selected.key].areas[props.value]
+  if ($selected.object3d) {
+    return $editor.uvs[$selected.key].areas[props.value]
   }
   return null
 })
 
 const onDel = () => {
-  editor.uvs[editor.selected.key].areas.splice(props.value, 1)
+  $editor.uvs[$selected.key].areas.splice(props.value, 1)
 }
 </script>
 

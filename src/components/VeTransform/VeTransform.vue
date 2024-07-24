@@ -1,13 +1,15 @@
 <script setup>
 import {computed, ref, watch} from "vue";
-import {useEditorStore, useTransformStore} from "@/stores";
 import {Euler} from "vue3d";
+import {angle2euler, euler2angle} from "vue3d/use/useTransform";
+import {useEditorStore} from "@/stores";
+import {useSelectedStore} from "@/stores/selected";
 
 /**
  * pinia store
  */
-const editor = useEditorStore()
-const tf = useTransformStore()
+const $editor = useEditorStore()
+const $selected = useSelectedStore()
 
 const order = 'XYZ'
 const angle = new Euler(0, 0, 0, order)
@@ -20,9 +22,9 @@ const disabled = ref(true) //
  * position
  */
 const position = computed(() => {
-  if (editor.selectedObject3d) {
+  if ($selected.object3d) {
     disabled.value = false
-    return editor.selectedObject3d.position
+    return $selected.object3d.position
   } else {
     disabled.value = true
     return {x: 0, y: 0, z: 0}
@@ -32,9 +34,9 @@ const position = computed(() => {
  * scale
  */
 const scale = computed(() => {
-  if (editor.selected.object3d) {
+  if ($selected.object3d) {
     disabled.value = false
-    return editor.selectedObject3d.scale
+    return $selected.object3d.scale
   } else {
     disabled.value = true
     return {x: 1, y: 1, z: 1}
@@ -45,13 +47,13 @@ const scale = computed(() => {
  * @type
  */
 const rotation = computed(() => {
-  if (editor.selected.object3d) {
+  if ($selected.object3d) {
     disabled.value = false
-    angle.setFromQuaternion(editor.selectedObject3d.quaternion) // 通过三维对象的四元数获取欧拉角
+    angle.setFromQuaternion($selected.object3d.quaternion) // 通过三维对象的四元数获取欧拉角
     return {
-      x: tf.euler2angle(angle.x),
-      y: tf.euler2angle(angle.y),
-      z: tf.euler2angle(angle.z)
+      x: euler2angle(angle.x),
+      y: euler2angle(angle.y),
+      z: euler2angle(angle.z)
     }
   } else {
     disabled.value = true
@@ -63,8 +65,8 @@ const rotation = computed(() => {
  * 监听并动态更新Position数据
  */
 watch(() => position.value, (val) => {
-  if (!editor.selectedObject3d) return
-  editor.selectedData.attr.position = {
+  if (!$selected.object3d) return
+  $editor.selectedData.attr.position = {
     x: Math.round(val.x * 1000) / 1000,
     y: Math.round(val.y * 1000) / 1000,
     z: Math.round(val.z * 1000) / 1000,
@@ -74,20 +76,20 @@ watch(() => position.value, (val) => {
  * 监听并动态更新Scale数据
  */
 watch(() => scale.value, (val) => {
-  if (!editor.selectedObject3d) return
-  editor.selectedData.attr.scale = {
+  if (!$selected.object3d) return
+  $editor.selectedData.attr.scale = {
     x: Math.round(val.x * 1000) / 1000,
     y: Math.round(val.y * 1000) / 1000,
     z: Math.round(val.z * 1000) / 1000,
   }
-  editor.selectedData.attr.size = 0
+  $editor.selectedData.attr.size = 0
 }, {deep: true})
 /**
  * 监听并动态更新Rotation数据
  */
 watch(() => rotation.value, (val) => {
-  if (!editor.selectedObject3d) return
-  editor.selectedData.attr.rotation = {
+  if (!$selected.object3d) return
+  $editor.selectedData.attr.angle = {
     x: Math.round(val.x * 1000) / 1000,
     y: Math.round(val.y * 1000) / 1000,
     z: Math.round(val.z * 1000) / 1000,
@@ -98,17 +100,16 @@ watch(() => rotation.value, (val) => {
 }, {deep: true})
 
 const onRotate = (axes, value) => {
-  console.log(axes, value)
-  editor.selectedData.attr.rotation[axes.toLowerCase()] = value
-  angle[axes.toLowerCase()] = tf.angle2euler(value)
+  $selected.getObject().attr.angle[axes.toLowerCase()] = value
+  angle[axes.toLowerCase()] = $tf.angle2euler(value)
   // angle.setFromQuaternion(editor.selectedObject3d.quaternion)
 
   // angle.x = tf.angle2euler(val.x)
   // angle.y = tf.angle2euler(val.y)
   // angle.z = tf.angle2euler(val.z)
-  editor.selectedObject3d.quaternion.setFromEuler(angle)
+  $selected.object3d.quaternion.setFromEuler(angle)
   // console.log(editor.selectedObject3d.quaternion.setFromAxisAngle(angle))
-  editor.render()
+  $editor.render()
 }
 </script>
 
@@ -122,7 +123,7 @@ const onRotate = (axes, value) => {
                       :step="0.01"
                       mode="embed"
                       :disabled="disabled"
-                      @change="editor.render">
+                      @change="$editor.render">
         <template #prepend>
           <span class="label">x:</span>
         </template>
@@ -133,7 +134,7 @@ const onRotate = (axes, value) => {
                       :step="0.01"
                       mode="embed"
                       :disabled="disabled"
-                      @change="editor.render">
+                      @change="$editor.render">
         <template #prepend>
           <span class="label">y:</span>
         </template>
@@ -144,7 +145,7 @@ const onRotate = (axes, value) => {
                       :step="0.01"
                       mode="embed"
                       :disabled="disabled"
-                      @change="editor.render">
+                      @change="$editor.render">
         <template #prepend>
           <span class="label">z:</span>
         </template>
@@ -161,7 +162,7 @@ const onRotate = (axes, value) => {
                       :step="0.001"
                       mode="embed"
                       :disabled="disabled"
-                      @change="editor.render">
+                      @change="$editor.render">
         <template #prepend>
           <span class="label">x:</span>
         </template>
@@ -172,7 +173,7 @@ const onRotate = (axes, value) => {
                       :step="0.001"
                       mode="embed"
                       :disabled="disabled"
-                      @change="editor.render">
+                      @change="$editor.render">
         <template #prepend>
           <span class="label">y:</span>
         </template>
@@ -183,7 +184,7 @@ const onRotate = (axes, value) => {
                       :step="0.001"
                       mode="embed"
                       :disabled="disabled"
-                      @change="editor.render">
+                      @change="$editor.render">
         <template #prepend>
           <span class="label">z:</span>
         </template>

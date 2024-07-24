@@ -1,22 +1,24 @@
 <script setup>
 import {computed, ref} from "vue";
-import {useEditorStore} from "../../stores";
 import VeUvsArea from "../VeUvsArea/VeUvsArea.vue";
+import {useEditorStore} from "@/stores";
+import {useSelectedStore} from "@/stores/selected";
 
-const editor = useEditorStore()
+const $editor = useEditorStore()
+const $selected = useSelectedStore()
 
 /**
  * 当前选中对象
  */
 const selected = computed(() => {
-  if (editor.selectedObject3d) {
-    if (!editor.uvs.hasOwnProperty(editor.selected.key)) {
-      editor.uvs[editor.selected.key] = {
+  if ($selected.object3d) {
+    if (!$editor.uvs.hasOwnProperty($selected.key)) {
+      $editor.uvs[$selected.key] = {
         editable: false,
         rule: 1024
       }
     }
-    return editor.uvs[editor.selected.key]
+    return $editor.uvs[$selected.key]
   }
   return null
 })
@@ -27,7 +29,7 @@ const onChangeEditable = (val) => {
 }
 
 const onAddArea = () => {
-  editor.uvs[editor.selected.key].areas.push({
+  $editor.uvs[$selected.key].areas.push({
     name: null,
     shape: "rect",
     width: 0,
@@ -39,7 +41,7 @@ const onAddArea = () => {
 </script>
 
 <template>
-  <template v-if="editor.selectedObject3d!==null">
+  <template v-if="$selected.object3d!==null">
     <a-row class="row">
       <a-col :span="6">允许编辑:</a-col>
       <a-col :span="18">

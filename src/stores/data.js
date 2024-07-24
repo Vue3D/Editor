@@ -6,7 +6,7 @@ import {nanoid} from "nanoid";
  */
 const defaultObjectAttr = {
     position: {x: 0, y: 0, z: 0},
-    rotation: {x: 0, y: 0, z: 0},
+    angle: {x: 0, y: 0, z: 0},
     scale: {x: 1, y: 1, z: 1},
 }
 
@@ -15,6 +15,7 @@ const defaultObjectAttr = {
  */
 export const useDataStore = defineStore('data', {
     state: () => ({
+        stage: null,
         /** 三维对象 **/
         objects: {},
         /** 三维对象可编辑区域 **/
@@ -27,6 +28,13 @@ export const useDataStore = defineStore('data', {
         hierarchy: [],
     }),
     actions: {
+        /**
+         * 初始化舞台数据
+         * @param stage
+         */
+        init(stage) {
+            this.stage = stage
+        },
         /**
          * 添加一个三维对象
          * @param type 对象类型，填写组件名称，如：V3dCube
@@ -41,7 +49,7 @@ export const useDataStore = defineStore('data', {
                 key: key,
                 component: type,
                 name: name,
-                attr: Object.assign({}, defaultObjectAttr, attr),
+                attr: Object.assign({name: key}, defaultObjectAttr, attr), // object3d 中的name需要对应数据节点中的key
             }
             this.mount(key, parentKey)
             return key
@@ -120,6 +128,15 @@ export const useDataStore = defineStore('data', {
             traverse(this.hierarchy)
             return node
         },
+        /**
+         * 获取对象数据
+         * @param key
+         * @returns {*|null}
+         */
+        getObject(key) {
+            if (this.objects.hasOwnProperty(key)) return this.objects[key]
+            else return null
+        }
     },
     // persist: {
     //     paths: []

@@ -4,8 +4,7 @@ import {V3dStage} from "vue3d";
 import {useEditorStore, useMaterialStore} from "@/stores";
 import VeComponent from "../VeComponent";
 
-const storeEditor = useEditorStore()
-const material = useMaterialStore()
+const $editor = useEditorStore()
 
 const props = defineProps({
   width: {type: Number, default: 100},
@@ -14,14 +13,14 @@ const props = defineProps({
 const editor = ref(null)
 
 onMounted(() => {
-  storeEditor.stage.value = editor.value
+  $editor.init(editor.value)
 })
 </script>
 
 <template>
   <div :style="{width,height}">
     <v3d-stage ref="editor" id="editor" :width="width" :height="height">
-      <template v-for="item in storeEditor.preset">
+      <template v-for="item in $editor.preset">
         <VeComponent :is="item.component"
                      :attr="item.attr"
                      :children="item.children"
@@ -29,11 +28,11 @@ onMounted(() => {
                      preset>
         </VeComponent>
       </template>
-      <template v-for="item in storeEditor.hierarchy">
-        <VeComponent v-if="editor.getObject(item.key)"
-                     :is="editor.getObject(item.key).component"
+      <template v-for="item in $editor.hierarchy">
+        <VeComponent v-if="$editor.getObject(item.key)"
+                     :is="$editor.getObject(item.key).component"
                      :name="item.key"
-                     :attr="editor.getObject(item.key).attr"
+                     :attr="$editor.getObject(item.key).attr"
                      :children="item.children"
                      :event="item.event"
                      :material="item.material">

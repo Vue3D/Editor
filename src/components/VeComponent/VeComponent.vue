@@ -1,9 +1,8 @@
 <script setup>
 import {useEditorStore, useMaterialStore} from "@/stores";
-import {computed} from "vue";
 
-const editor = useEditorStore()
-const material = useMaterialStore()
+const $editor = useEditorStore()
+const $material = useMaterialStore()
 
 const props = defineProps({
   is: {type: String},
@@ -18,17 +17,14 @@ const props = defineProps({
   preset: {type: Boolean, default: false},
   material: {type: String}
 })
-console.log(props.attr && props.attr.hasOwnProperty("material"))
+console.log(props.attr)
 if (props.attr && props.attr.hasOwnProperty("material")) {
-  props.attr.material = material.get(props.material)
+  props.attr.material = $material.get(props.material)
 }
 
 </script>
 <template>
-  <component :is="is"
-             v-bind="attr"
-             v-on="event"
-  >
+  <component :is="is" v-bind="attr" v-on="event">
     <template v-if="children?.length>0">
       <!--预设对象-->
       <template v-if="preset">
@@ -43,9 +39,9 @@ if (props.attr && props.attr.hasOwnProperty("material")) {
       <!--三维对象-->
       <template v-else>
         <VeComponent v-for="item in children"
-                     :is="editor.getObject(item.key).component"
+                     :is="$editor.getObject(item.key).component"
                      :name="item.key"
-                     :attr="editor.getObject(item.key).attr"
+                     :attr="$editor.getObject(item.key).attr"
                      :children="item.children"
                      :event="item.event"
                      :material="item.material">
