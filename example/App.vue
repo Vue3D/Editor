@@ -1,20 +1,20 @@
 <script setup>
 import {VcPcAppLayout, VcSidebar, VcSidebarItem} from "@unjuanable/vcui";
 import {onMounted, ref} from "vue";
-import VeInspector from "@/components/VeInspector";
-import VeTransformMode from "@/components/VeTransformMode";
-import VeHierarchy from "@/components/VeHierachy";
-import VeScene from "@/components/VeScene";
-import MyObjectsList from "./componens/MyObjectsList.vue";
+import VeInspector from "@/layout/VeInspector";
+import VeTransformMode from "@/layout/VeTransformMode";
+import VeHierarchy from "@/layout/VeHierachy";
+import VeScene from "@/layout/VeScene";
+import MyObjectsList from "./components/MyObjectsList.vue";
 import {useEditorStore} from "@/stores";
 import {load, save, update} from "./api/yunyan";
 import {useIcon} from "@unjuanable/iconfont";
 
+const $editor = useEditorStore()
 
 const collapsed = ref(false)
 const collapse_right = ref(true)
 const activate = ref(0)
-const editor = useEditorStore()
 const visible = ref(false)
 const name = ref("")
 
@@ -27,7 +27,7 @@ onMounted(() => {
       if (res.code === 2000) {
         const obj = JSON.parse(res.data[0].uvs)
         name.value = res.data[0].name
-        editor.load(obj)
+        $editor.load(obj)
       }
     })
   }
@@ -37,20 +37,20 @@ const handleCancel = () => {
 }
 
 const handleBeforeOk = async () => {
-  const thumbnail = editor.editor.stage.dom.canvas.toDataURL()
+  const thumbnail = $editor.stage.dom.canvas.toDataURL()
   if (id) {
     await update({
       id: id,
       name: name.value,
       thumbnail: thumbnail,
-      uvs: editor.save()
+      uvs: $editor.save()
     });
     return true;
   } else {
     const res = await save({
       name: name.value,
       thumbnail: thumbnail,
-      uvs: editor.save()
+      uvs: $editor.save()
     });
     id = res.data
     return true;

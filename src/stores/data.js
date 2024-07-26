@@ -16,8 +16,8 @@ const defaultObjectAttr = {
 export const useDataStore = defineStore('data', {
     state: () => ({
         stage: null,
-        /** 三维对象 **/
-        objects: {},
+        /** 组件对象 **/
+        components: {},
         /** 三维对象可编辑区域 **/
         uvs: {},
         /** 三维材质 **/
@@ -45,7 +45,7 @@ export const useDataStore = defineStore('data', {
          */
         add(type, name, attr, parentKey = null) {
             const key = nanoid(8)
-            this.objects[key] = {
+            this.components[key] = {
                 key: key,
                 component: type,
                 name: name,
@@ -60,8 +60,8 @@ export const useDataStore = defineStore('data', {
          * @return boolean
          */
         remove(key) {
-            if (this.objects.hasOwnProperty(key)) {
-                delete this.objects[key]
+            if (this.components.hasOwnProperty(key)) {
+                delete this.components[key]
                 this.unmount(key)
                 return true
             }
@@ -73,7 +73,7 @@ export const useDataStore = defineStore('data', {
          * @param parentKey
          */
         mount(key, parentKey = null) {
-            const object = this.objects[key]
+            const object = this.components[key]
             const node = {
                 key: key,
                 name: object.name,
@@ -133,8 +133,8 @@ export const useDataStore = defineStore('data', {
          * @param key
          * @returns {*|null}
          */
-        getObject(key) {
-            if (this.objects.hasOwnProperty(key)) return this.objects[key]
+        getComponent(key) {
+            if (this.components.hasOwnProperty(key)) return this.components[key]
             else return null
         }
     },

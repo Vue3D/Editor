@@ -34,7 +34,7 @@ const mtlName = ref("")
  */
 const selected = computed({
   get() {
-    if ($editor.selectedObject3d) {
+    if ($selected.object3d) {
       const key = $selected.node?.material
       activeMtl = $material.get(key)
       activePure = $material.getPure(key)
@@ -120,13 +120,13 @@ const onUploadProgress = (currentFile) => {
       <a-col :span="16">
         <a-select :style="{width:'100%'}"
                   v-model="selected"
-                  :disabled="$editor.selectedObject3d===null">
+                  :disabled="$selected.object3d===null">
           <a-option v-for="(item,key) in $material.list" :value="key">{{ item.name }}</a-option>
         </a-select>
       </a-col>
     </a-row>
 
-    <template v-if="$editor.selectedObject3d!==null&&selected!=='default'">
+    <template v-if="$selected.object3d!==null&&selected!=='default'">
       <a-row class="row">
         <a-col :span="6">颜色:</a-col>
         <a-col :span="18">

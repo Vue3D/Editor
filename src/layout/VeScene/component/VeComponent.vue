@@ -17,7 +17,6 @@ const props = defineProps({
   preset: {type: Boolean, default: false},
   material: {type: String}
 })
-console.log(props.attr)
 if (props.attr && props.attr.hasOwnProperty("material")) {
   props.attr.material = $material.get(props.material)
 }

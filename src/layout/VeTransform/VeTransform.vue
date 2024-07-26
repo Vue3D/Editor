@@ -66,7 +66,7 @@ const rotation = computed(() => {
  */
 watch(() => position.value, (val) => {
   if (!$selected.object3d) return
-  $editor.selectedData.attr.position = {
+  $selected.component.attr.position = {
     x: Math.round(val.x * 1000) / 1000,
     y: Math.round(val.y * 1000) / 1000,
     z: Math.round(val.z * 1000) / 1000,
@@ -77,19 +77,19 @@ watch(() => position.value, (val) => {
  */
 watch(() => scale.value, (val) => {
   if (!$selected.object3d) return
-  $editor.selectedData.attr.scale = {
+  $selected.component.attr.scale = {
     x: Math.round(val.x * 1000) / 1000,
     y: Math.round(val.y * 1000) / 1000,
     z: Math.round(val.z * 1000) / 1000,
   }
-  $editor.selectedData.attr.size = 0
+  $selected.component.attr.size = 0
 }, {deep: true})
 /**
  * 监听并动态更新Rotation数据
  */
 watch(() => rotation.value, (val) => {
   if (!$selected.object3d) return
-  $editor.selectedData.attr.angle = {
+  $selected.component.attr.angle = {
     x: Math.round(val.x * 1000) / 1000,
     y: Math.round(val.y * 1000) / 1000,
     z: Math.round(val.z * 1000) / 1000,
@@ -101,7 +101,7 @@ watch(() => rotation.value, (val) => {
 
 const onRotate = (axes, value) => {
   $selected.getObject().attr.angle[axes.toLowerCase()] = value
-  angle[axes.toLowerCase()] = $tf.angle2euler(value)
+  angle[axes.toLowerCase()] = angle2euler(value)
   // angle.setFromQuaternion(editor.selectedObject3d.quaternion)
 
   // angle.x = tf.angle2euler(val.x)

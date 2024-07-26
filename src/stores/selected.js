@@ -8,13 +8,19 @@ export const useSelectedStore = defineStore('selected', {
         node: null, // 选中对象在层级面板中的节点对象
         object3d: null, // 选中的三维对象
     }),
+    getters: {
+        component(state) {
+            const $data = useDataStore()
+            return $data.getComponent(this.key)
+        },
+    },
     computed: {
-        ...mapState(useDataStore, ['stage', 'hierarchy'])
+        ...mapState(useDataStore, ['stage', 'hierarchy']),
     },
     actions: {
         getObject() {
             const $data = useDataStore()
-            return $data.objects[this.key]
+            return $data.components[this.key]
         },
         /**
          * 通过三维对象设置选中对象
