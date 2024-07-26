@@ -14,17 +14,6 @@ export const useEditorStore = defineStore('editor', () => {
         space: "world", // transform space [world, local]
     })
 
-    /** 舞台数据 **/
-    const stage = computed(() => ($data.stage))
-    /** 数据对象 **/
-    const objects = computed(() => ($data.objects))
-    /** 材质对象 **/
-    const materials = computed(() => ($data.materials))
-    /** 编辑区域对象 **/
-    const uvs = computed(() => ($data.uvs))
-    /** 层级对象 **/
-    const hierarchy = computed(() => ($data.hierarchy))
-
     /**
      * 初始化
      * @param stage
@@ -45,7 +34,7 @@ export const useEditorStore = defineStore('editor', () => {
      * 添加Cube
      */
     function addCube() {
-        $data.add("V3dCube", "Cube", {})
+        $data.add("V3dCube", "Cube", {position: {x: 1, y: 0, z: 0}})
     }
 
     /**
@@ -105,16 +94,11 @@ export const useEditorStore = defineStore('editor', () => {
      * 渲染
      */
     function render() {
-        stage.render()
+        $data.stage.render()
     }
-
-    onMounted(() => {
-        addCube()
-    })
 
     return {
         transform,
-        stage, objects, uvs, materials, hierarchy,
         init,
         save, load, addCube, addSphere, addObject, addYyObject, remove,
         render,

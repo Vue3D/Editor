@@ -11,17 +11,13 @@ export const useSelectedStore = defineStore('selected', {
     getters: {
         component(state) {
             const $data = useDataStore()
-            return $data.getComponent(this.key)
+            return $data.getComponent(state.key)
         },
     },
     computed: {
         ...mapState(useDataStore, ['stage', 'hierarchy']),
     },
     actions: {
-        getObject() {
-            const $data = useDataStore()
-            return $data.components[this.key]
-        },
         /**
          * 通过三维对象设置选中对象
          * @param object3d

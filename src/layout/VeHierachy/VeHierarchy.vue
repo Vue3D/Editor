@@ -1,11 +1,12 @@
 <script setup>
 import {inject, onMounted, reactive, ref} from 'vue';
-import {useEditorStore} from "@/stores";
+import {useEditorStore, useSelectedStore} from "@/stores";
 import VeDataTool from "../VeDataTool";
 
-const editor = useEditorStore()
+const $editor = useEditorStore()
+const $selected = useSelectedStore()
 
-const treeData = ref(editor.hierarchy);
+const treeData = ref($editor.hierarchy);
 const treeField = reactive({
   key: 'key',
   title: 'name',
@@ -17,7 +18,7 @@ const selected = ref([])
 
 const onSelect = (data, node) => {
   if (data.length > 0) {
-    editor.onSelectedByName(data[0])
+    $selected.setByName(data[0])
   }
 }
 /**
@@ -27,7 +28,7 @@ const onSelect = (data, node) => {
  * @param dropPosition
  */
 const onDrop = ({dragNode, dropNode, dropPosition}) => {
-  editor.onFreeSelected()
+  $selected.$reset()
   const data = treeData.value;
   const loop = (data, key, callback) => {
     data.some((item, index, arr) => {

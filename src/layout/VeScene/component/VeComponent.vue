@@ -1,7 +1,7 @@
 <script setup>
-import {useEditorStore, useMaterialStore} from "@/stores";
+import {useDataStore, useMaterialStore} from "@/stores";
 
-const $editor = useEditorStore()
+const $data = useDataStore()
 const $material = useMaterialStore()
 
 const props = defineProps({
@@ -38,9 +38,9 @@ if (props.attr && props.attr.hasOwnProperty("material")) {
       <!--三维对象-->
       <template v-else>
         <VeComponent v-for="item in children"
-                     :is="$editor.getObject(item.key).component"
+                     :is="$data.getComponent(item.key).component"
                      :name="item.key"
-                     :attr="$editor.getObject(item.key).attr"
+                     :attr="$data.getComponent(item.key).attr"
                      :children="item.children"
                      :event="item.event"
                      :material="item.material">

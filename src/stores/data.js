@@ -33,6 +33,7 @@ export const useDataStore = defineStore('data', {
          * @param stage
          */
         init(stage) {
+            console.log(stage)
             this.stage = stage
         },
         /**

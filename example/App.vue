@@ -6,11 +6,12 @@ import VeTransformMode from "@/layout/VeTransformMode";
 import VeHierarchy from "@/layout/VeHierachy";
 import VeScene from "@/layout/VeScene";
 import MyObjectsList from "./components/MyObjectsList.vue";
-import {useEditorStore} from "@/stores";
+import {useEditorStore, useEventbusStore} from "@/stores";
 import {load, save, update} from "./api/yunyan";
 import {useIcon} from "@unjuanable/iconfont";
 
 const $editor = useEditorStore()
+const $eventbus = useEventbusStore()
 
 const collapsed = ref(false)
 const collapse_right = ref(true)
@@ -31,6 +32,7 @@ onMounted(() => {
       }
     })
   }
+  $editor.addCube()
 })
 
 const handleCancel = () => {

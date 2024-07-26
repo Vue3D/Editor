@@ -82,7 +82,6 @@ watch(() => scale.value, (val) => {
     y: Math.round(val.y * 1000) / 1000,
     z: Math.round(val.z * 1000) / 1000,
   }
-  $selected.component.attr.size = 0
 }, {deep: true})
 /**
  * 监听并动态更新Rotation数据
@@ -100,7 +99,7 @@ watch(() => rotation.value, (val) => {
 }, {deep: true})
 
 const onRotate = (axes, value) => {
-  $selected.getObject().attr.angle[axes.toLowerCase()] = value
+  $selected.component.attr.angle[axes.toLowerCase()] = value
   angle[axes.toLowerCase()] = angle2euler(value)
   // angle.setFromQuaternion(editor.selectedObject3d.quaternion)
 
@@ -119,8 +118,8 @@ const onRotate = (axes, value) => {
     <a-col :span="20">
       <a-input-number class="input"
                       v-model="position.x"
-                      :precision="3"
-                      :step="0.01"
+                      :precision="2"
+                      :step="0.1"
                       mode="embed"
                       :disabled="disabled"
                       @change="$editor.render">
@@ -130,8 +129,8 @@ const onRotate = (axes, value) => {
       </a-input-number>
       <a-input-number class="input"
                       v-model="position.y"
-                      :precision="3"
-                      :step="0.01"
+                      :precision="2"
+                      :step="0.1"
                       mode="embed"
                       :disabled="disabled"
                       @change="$editor.render">
@@ -141,8 +140,8 @@ const onRotate = (axes, value) => {
       </a-input-number>
       <a-input-number class="input"
                       v-model="position.z"
-                      :precision="3"
-                      :step="0.01"
+                      :precision="2"
+                      :step="0.1"
                       mode="embed"
                       :disabled="disabled"
                       @change="$editor.render">
@@ -158,8 +157,8 @@ const onRotate = (axes, value) => {
     <a-col :span="20">
       <a-input-number class="input"
                       v-model="scale.x"
-                      :precision="3"
-                      :step="0.001"
+                      :precision="2"
+                      :step="0.1"
                       mode="embed"
                       :disabled="disabled"
                       @change="$editor.render">
@@ -169,8 +168,8 @@ const onRotate = (axes, value) => {
       </a-input-number>
       <a-input-number class="input"
                       v-model="scale.y"
-                      :precision="3"
-                      :step="0.001"
+                      :precision="2"
+                      :step="0.1"
                       mode="embed"
                       :disabled="disabled"
                       @change="$editor.render">
@@ -180,8 +179,8 @@ const onRotate = (axes, value) => {
       </a-input-number>
       <a-input-number class="input"
                       v-model="scale.z"
-                      :precision="3"
-                      :step="0.001"
+                      :precision="2"
+                      :step="0.1"
                       mode="embed"
                       :disabled="disabled"
                       @change="$editor.render">
@@ -197,7 +196,7 @@ const onRotate = (axes, value) => {
     <a-col :span="20">
       <a-input-number class="input"
                       v-model="rotation.x"
-                      :precision="3"
+                      :precision="2"
                       :step="1"
                       mode="embed"
                       :disabled="disabled"
@@ -208,7 +207,7 @@ const onRotate = (axes, value) => {
       </a-input-number>
       <a-input-number class="input"
                       v-model="rotation.y"
-                      :precision="3"
+                      :precision="2"
                       :step="1"
                       mode="embed"
                       :disabled="disabled"
@@ -219,7 +218,7 @@ const onRotate = (axes, value) => {
       </a-input-number>
       <a-input-number class="input"
                       v-model="rotation.z"
-                      :precision="3"
+                      :precision="2"
                       :step="1"
                       mode="embed"
                       :disabled="disabled"

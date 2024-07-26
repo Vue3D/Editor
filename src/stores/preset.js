@@ -8,9 +8,9 @@ export const usePresetStore = defineStore('preset', () => {
     const $selected = useSelectedStore()
 
     /** 选中的目标三维对象 **/
-    const selectedObject3d = computed(() => ($selected.object3d))
+    const sObject3d = computed(() => ($selected.object3d))
     /** 选中的三维对象的数据参数 **/
-    const selectedData = computed(() => ($selected.getObject()))
+    const sComponent = computed(() => ($selected.component))
     /** transform mode **/
     const tfMode = computed(() => ($editor.transform.mode))
     /** transform 参考坐标系 **/
@@ -26,13 +26,13 @@ export const usePresetStore = defineStore('preset', () => {
             component: "V3dPerspectiveCamera",
             attr: {
                 main: true,
-                position: {x: 0, y: 0, z: 20},
+                position: {x: 0, y: 0, z: 10},
             },
             children: [
                 {component: "V3dCameraOrbitControl"},
                 {
                     component: "V3dCameraTransformControl",
-                    attr: {target: selectedObject3d, mode: tfMode, space: tfSpace},
+                    attr: {target: sObject3d, mode: tfMode, space: tfSpace},
                     event: {change: onObjectChange}
                 },
                 {component: "V3dCameraRaycaster", event: {pick: onPick}},

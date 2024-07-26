@@ -1,24 +1,24 @@
 <script setup>
 import {computed, ref} from "vue";
 import VeUvsArea from "../VeUvsArea/VeUvsArea.vue";
-import {useEditorStore} from "@/stores";
+import {useDataStore, useEditorStore} from "@/stores";
 import {useSelectedStore} from "@/stores/selected";
 
-const $editor = useEditorStore()
 const $selected = useSelectedStore()
+const $data = useDataStore()
 
 /**
  * 当前选中对象
  */
 const selected = computed(() => {
   if ($selected.object3d) {
-    if (!$editor.uvs.hasOwnProperty($selected.key)) {
-      $editor.uvs[$selected.key] = {
+    if (!$data.uvs.hasOwnProperty($selected.key)) {
+      $data.uvs[$selected.key] = {
         editable: false,
         rule: 1024
       }
     }
-    return $editor.uvs[$selected.key]
+    return $data.uvs[$selected.key]
   }
   return null
 })
@@ -29,7 +29,7 @@ const onChangeEditable = (val) => {
 }
 
 const onAddArea = () => {
-  $editor.uvs[$selected.key].areas.push({
+  $data.uvs[$selected.key].areas.push({
     name: null,
     shape: "rect",
     width: 0,

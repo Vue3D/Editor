@@ -1,7 +1,7 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {V3dStage} from "vue3d";
-import {useDataStore, useEditorStore, useMaterialStore} from "@/stores";
+import {useDataStore, useEditorStore} from "@/stores";
 import VeComponent from "./component/VeComponent.vue";
 import {usePresetStore} from "@/stores/preset";
 
@@ -13,10 +13,11 @@ const props = defineProps({
   width: {type: Number, default: 100},
   height: {type: Number, default: 100}
 })
+
 const editor = ref(null)
 
 onMounted(() => {
-  $editor.init(editor.value)
+  $editor.init(editor.value.stage)
 })
 </script>
 
@@ -31,7 +32,7 @@ onMounted(() => {
                      preset>
         </VeComponent>
       </template>
-      <template v-for="item in $editor.hierarchy">
+      <template v-for="item in $data.hierarchy">
         <VeComponent v-if="$data.getComponent(item.key)"
                      :is="$data.getComponent(item.key).component"
                      :name="item.key"
