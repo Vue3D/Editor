@@ -33,7 +33,7 @@ export const usePresetStore = defineStore('preset', () => {
                 {
                     component: "V3dCameraTransformControl",
                     attr: {target: sObject3d, mode: tfMode, space: tfSpace},
-                    event: {change: onObjectChange}
+                    event: {change: $selected.onChange}
                 },
                 {component: "V3dCameraRaycaster", event: {pick: onPick}},
                 {component: "V3dDirectionalLight", attr: {intensity: 0.8, position: {x: 0, y: 100, z: 100}}}

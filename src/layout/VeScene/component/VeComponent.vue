@@ -1,9 +1,13 @@
 <script setup>
+import {computed} from "vue";
 import {useDataStore, useMaterialStore} from "@/stores";
 
 const $data = useDataStore()
 const $material = useMaterialStore()
 
+defineOptions({
+  inheritAttrs: false
+})
 const props = defineProps({
   is: {type: String},
   name: {type: String},
@@ -17,13 +21,14 @@ const props = defineProps({
   preset: {type: Boolean, default: false},
   material: {type: String}
 })
-if (props.attr && props.attr.hasOwnProperty("material")) {
-  props.attr.material = $material.get(props.material)
-}
+
+const mtl = computed(() => {
+  return $material.get(props.material)
+})
 
 </script>
 <template>
-  <component :is="is" v-bind="attr" v-on="event">
+  <component :is="is" v-bind="attr" v-on="event" :material="mtl">
     <template v-if="children?.length>0">
       <!--预设对象-->
       <template v-if="preset">

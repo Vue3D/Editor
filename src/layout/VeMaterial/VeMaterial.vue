@@ -9,6 +9,7 @@ import {useSelectedStore} from "@/stores/selected";
 const $editor = useEditorStore()
 const $selected = useSelectedStore()
 const $material = useMaterialStore()
+
 const visible = ref(false)
 const visibleAddMtl = ref(false)
 

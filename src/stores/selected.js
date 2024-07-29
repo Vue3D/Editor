@@ -40,6 +40,7 @@ export const useSelectedStore = defineStore('selected', {
             const object3d = reactive(this.stage.getObjectByName(name))
             this.setByObject(object3d)
         },
-
+        onChange(target) {
+        }
     }
 })
