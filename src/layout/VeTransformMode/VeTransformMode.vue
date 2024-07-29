@@ -1,6 +1,6 @@
 <script setup>
 import {useIcon} from "@unjuanable/iconfont";
-import {useEditorStore} from "@/stores";
+import {useEditorStore} from "@vue3d/editor/stores";
 
 const $editor = useEditorStore()
 const changeMode = (val) => {

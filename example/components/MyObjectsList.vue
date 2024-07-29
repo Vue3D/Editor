@@ -1,10 +1,10 @@
 <script setup>
-import {image_path, label_list, object_list, uv_data} from "../api/yunyan";
+import {image_path, label_list, object_list, uv_data} from "@/api/yunyan";
 import ResourceList from "./ResourceList.vue";
 import {VcImage} from "@unjuanable/vcui";
 import {inject, onMounted, reactive, ref} from "vue";
-import {errImage} from "../assets/base64";
-import {useEditorStore} from "@/stores";
+import {errImage} from "@/assets/base64";
+import {useEditorStore} from "@vue3d/editor/stores";
 
 const editor = useEditorStore()
 const canvue = inject('canvue')

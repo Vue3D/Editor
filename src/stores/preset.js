@@ -1,7 +1,7 @@
 import {defineStore} from "pinia";
 import {computed, reactive} from "vue";
-import {useSelectedStore} from "@/stores/selected";
-import {useEditorStore} from "@/stores/editor";
+import {useSelectedStore} from "./selected";
+import {useEditorStore} from "./editor";
 
 export const usePresetStore = defineStore('preset', () => {
     const $editor = useEditorStore()

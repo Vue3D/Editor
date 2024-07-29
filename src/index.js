@@ -5,8 +5,8 @@ import IconFont from "@unjuanable/iconfont";
 import '@arco-design/web-vue/dist/arco.css'
 import "vue3-colorpicker/style.css";
 
-import store from "@/stores"
-import components from "@/components";
+import store from "./stores"
+import components from "./v3components";
 
 export default {
     install(app) {

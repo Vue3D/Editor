@@ -1,6 +1,6 @@
 import {defineStore} from "pinia";
 import {onMounted} from "vue";
-import {useEditorStore} from "@/stores/editor";
+import {useEditorStore} from "./editor";
 
 export const useEventbusStore = defineStore('eventbus', () => {
     const $editor = useEditorStore()

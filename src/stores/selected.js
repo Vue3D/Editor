@@ -1,6 +1,6 @@
 import {defineStore, mapState} from "pinia";
-import {useDataStore} from "@/stores/data";
 import {reactive} from "vue";
+import {useDataStore} from "./data";
 
 export const useSelectedStore = defineStore('selected', {
     state: () => ({

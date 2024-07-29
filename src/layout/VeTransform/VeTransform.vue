@@ -2,8 +2,8 @@
 import {computed, ref, watch} from "vue";
 import {Euler} from "vue3d";
 import {angle2euler, euler2angle} from "vue3d/use/useTransform";
-import {useEditorStore} from "@/stores";
-import {useSelectedStore} from "@/stores/selected";
+import {useEditorStore} from "@vue3d/editor/stores";
+import {useSelectedStore} from "@vue3d/editor/stores/selected";
 
 /**
  * pinia store

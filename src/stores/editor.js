@@ -2,7 +2,7 @@ import {computed, markRaw, onMounted, reactive} from 'vue'
 import {defineStore} from 'pinia'
 import {useDataStore} from "./data";
 import {useMaterialStore} from "./material";
-import {useSelectedStore} from "@/stores/selected";
+import {useSelectedStore} from "./selected";
 
 export const useEditorStore = defineStore('editor', () => {
     const $data = useDataStore()

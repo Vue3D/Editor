@@ -1,12 +1,13 @@
 <script setup>
 import {inject, onMounted, reactive, ref} from 'vue';
-import {useEditorStore, useSelectedStore} from "@/stores";
+import {useDataStore, useEditorStore, useSelectedStore} from "@vue3d/editor/stores";
 import VeDataTool from "../VeDataTool";
 
 const $editor = useEditorStore()
 const $selected = useSelectedStore()
+const $data = useDataStore()
 
-const treeData = ref($editor.hierarchy);
+const treeData = ref($data.hierarchy);
 const treeField = reactive({
   key: 'key',
   title: 'name',

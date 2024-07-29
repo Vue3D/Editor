@@ -1,12 +1,12 @@
 <script setup>
 import {VcPcAppLayout, VcSidebar, VcSidebarItem} from "@unjuanable/vcui";
 import {onMounted, ref} from "vue";
-import VeInspector from "@/layout/VeInspector";
-import VeTransformMode from "@/layout/VeTransformMode";
-import VeHierarchy from "@/layout/VeHierachy";
-import VeScene from "@/layout/VeScene";
+import VeInspector from "@vue3d/editor/layout/VeInspector";
+import VeTransformMode from "@vue3d/editor/layout/VeTransformMode";
+import VeHierarchy from "@vue3d/editor/layout/VeHierachy";
+import VeScene from "@vue3d/editor/layout/VeScene";
+import {useEditorStore, useEventbusStore} from "@vue3d/editor/stores";
 import MyObjectsList from "./components/MyObjectsList.vue";
-import {useEditorStore, useEventbusStore} from "@/stores";
 import {load, save, update} from "./api/yunyan";
 import {useIcon} from "@unjuanable/iconfont";
 

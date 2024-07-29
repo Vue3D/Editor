@@ -1,6 +1,6 @@
 <script setup>
 import {computed} from "vue";
-import {useDataStore, useMaterialStore} from "@/stores";
+import {useDataStore, useMaterialStore} from "@vue3d/editor/stores";
 
 const $data = useDataStore()
 const $material = useMaterialStore()

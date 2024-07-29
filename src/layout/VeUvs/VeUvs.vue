@@ -1,8 +1,8 @@
 <script setup>
 import {computed, ref} from "vue";
 import VeUvsArea from "../VeUvsArea/VeUvsArea.vue";
-import {useDataStore, useEditorStore} from "@/stores";
-import {useSelectedStore} from "@/stores/selected";
+import {useDataStore} from "@vue3d/editor/stores";
+import {useSelectedStore} from "@vue3d/editor/stores/selected";
 
 const $selected = useSelectedStore()
 const $data = useDataStore()

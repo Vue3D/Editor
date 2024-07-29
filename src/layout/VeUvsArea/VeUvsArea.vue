@@ -1,6 +1,6 @@
 <script setup>
 import {computed} from "vue";
-import {useEditorStore, useSelectedStore} from "@/stores";
+import {useEditorStore, useSelectedStore} from "@vue3d/editor/stores";
 
 const $editor = useEditorStore()
 const $selected = useSelectedStore()

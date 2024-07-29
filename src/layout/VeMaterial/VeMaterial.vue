@@ -2,9 +2,9 @@
 import {computed, markRaw, reactive, ref} from "vue";
 import {Color, TextureLoader} from "vue3d"
 import {ColorPicker} from "vue3-colorpicker";
-import {useEditorStore, useMaterialStore} from "@/stores";
 import {Notification} from '@arco-design/web-vue';
-import {useSelectedStore} from "@/stores/selected";
+import {useEditorStore, useMaterialStore} from "@vue3d/editor/stores";
+import {useSelectedStore} from "@vue3d/editor/stores/selected";
 
 const $editor = useEditorStore()
 const $selected = useSelectedStore()

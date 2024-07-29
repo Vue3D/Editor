@@ -1,9 +1,9 @@
 <script setup>
 import {onMounted, ref} from "vue";
 import {V3dStage} from "vue3d";
-import {useDataStore, useEditorStore} from "@/stores";
+import {useDataStore, useEditorStore} from "@vue3d/editor/stores";
+import {usePresetStore} from "@vue3d/editor/stores/preset";
 import VeComponent from "./component/VeComponent.vue";
-import {usePresetStore} from "@/stores/preset";
 
 const $editor = useEditorStore()
 const $data = useDataStore()
